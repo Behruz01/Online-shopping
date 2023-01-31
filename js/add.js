@@ -41,29 +41,28 @@ function getData() {
       let data = await res.json();
       products = data;
 
-      loader.style.display = "none";
       if (res.status === 404) {
         throw new Error("Malumot topilmadi!");
       }
 
-      elSelect.innerHTML = `
-                <option value="products">products</option>
-              `;
-      let newArray = [];
+      // elSelect.innerHTML = `
+      //           <option value="products">products</option>
+      //         `;
+      // let newArray = [];
 
-      products.forEach((element) => {
-        if (!newArray.includes(element.category)) {
-          newArray.push(element.category);
-        }
-      });
+      // products.forEach((element) => {
+      //   if (!newArray.includes(element.category)) {
+      //     newArray.push(element.category);
+      //   }
+      // });
 
-      newArray.forEach((elem) => {
-        let elOption = document.createElement("option");
-        elOption.value = elem;
-        elOption.textContent = elem;
+      // newArray.forEach((elem) => {
+      //   let elOption = document.createElement("option");
+      //   elOption.value = elem;
+      //   elOption.textContent = elem;
 
-        elSelect.appendChild(elOption);
-      });
+      //   elSelect.appendChild(elOption);
+      // });
 
       console.log(products);
       renderProduct(products);
@@ -73,3 +72,4 @@ function getData() {
     console.log(err);
   }
 }
+getData();
