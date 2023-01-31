@@ -1,10 +1,7 @@
 import findElement from "./units/findElement.js";
-
 const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
-const elSelect = findElement("#select");
-const loader = findElement("#loader");
 let products = [];
 
 function renderProduct(array, parent = elCards) {
@@ -35,61 +32,44 @@ function renderProduct(array, parent = elCards) {
   });
   parent.appendChild(fragment);
 }
-try {
-  async function getData() {
-    const res = await fetch(BASE_URL + "/products");
 
-    let data = await res.json();
-    products = data;
+function getData() {
+  try {
+    async function getData() {
+      const res = await fetch(BASE_URL + "/products");
 
-    loader.style.display = "none";
-    if (res.status === 404) {
-      throw new Error("Malumot topilmadi!");
-    }
+      let data = await res.json();
+      products = data;
 
-    elSelect.innerHTML = `
-        <option value="products">products</option>
-      `;
-    let newArray = [];
-
-    products.forEach((element) => {
-      if (!newArray.includes(element.category)) {
-        newArray.push(element.category);
+      loader.style.display = "none";
+      if (res.status === 404) {
+        throw new Error("Malumot topilmadi!");
       }
-    });
 
-    newArray.forEach((elem) => {
-      let elOption = document.createElement("option");
-      elOption.value = elem;
-      elOption.textContent = elem;
+      elSelect.innerHTML = `
+                <option value="products">products</option>
+              `;
+      let newArray = [];
 
-      elSelect.appendChild(elOption);
-    });
+      products.forEach((element) => {
+        if (!newArray.includes(element.category)) {
+          newArray.push(element.category);
+        }
+      });
 
-    console.log(products);
-    renderProduct(products);
+      newArray.forEach((elem) => {
+        let elOption = document.createElement("option");
+        elOption.value = elem;
+        elOption.textContent = elem;
+
+        elSelect.appendChild(elOption);
+      });
+
+      console.log(products);
+      renderProduct(products);
+    }
+    getData();
+  } catch (err) {
+    console.log(err);
   }
-  getData();
-} catch (err) {
-  console.log(err);
 }
-
-// options;
-
-elSelect.addEventListener("change", (evt) => {
-  const opt = elSelect.value;
-
-  let filteredPost = [];
-
-  if (opt == "products") {
-    renderProduct(products);
-  } else {
-    for (let i = 0; i < products.length; i++) {
-      const element = products[i];
-      if (element.category == opt) {
-        filteredPost.push(element);
-      }
-    }
-    renderProduct(filteredPost);
-  }
-});
