@@ -1,8 +1,13 @@
 import findElement from "./units/findElement.js";
+
 const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
+
+let products = [];
+
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
-let products = [];
+const elForm = findElement("#addForm");
+const elSelect = findElement("#select");
 
 function renderProduct(array, parent = elCards) {
   parent.textContent = "";
@@ -38,16 +43,15 @@ function getData() {
     async function getData() {
       const res = await fetch(BASE_URL + "/products");
 
-      let data = await res.json();
-      products = data;
-
       if (res.status === 404) {
         throw new Error("Malumot topilmadi!");
       }
+      let data = await res.json();
+      products = data;
 
       // elSelect.innerHTML = `
-      //           <option value="products">products</option>
-      //         `;
+      //     <option value="products">products</option>
+      //   `;
       // let newArray = [];
 
       // products.forEach((element) => {
@@ -64,7 +68,6 @@ function getData() {
       //   elSelect.appendChild(elOption);
       // });
 
-      console.log(products);
       renderProduct(products);
     }
     getData();
@@ -72,4 +75,3 @@ function getData() {
     console.log(err);
   }
 }
-getData();
