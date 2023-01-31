@@ -42,34 +42,31 @@ function renderProduct(array, parent = elCards) {
   let data = await res.json();
   products = data;
 
-  console.log(products);
-  renderProduct(products);
-})();
-
-//select
-function renderSelect(arr, p) {
   elSelect.innerHTML = `
         <option value="products">products</option>
       `;
-  // elSelect.textContent = null;
   let newArray = [];
 
-  arr.forEach((element) => {
+  products.forEach((element) => {
     if (!newArray.includes(element.category)) {
       newArray.push(element.category);
     }
   });
+
   newArray.forEach((elem) => {
     let elOption = document.createElement("option");
     elOption.value = elem;
     elOption.textContent = elem;
 
-    p.appendChild(elOption);
+    elSelect.appendChild(elOption);
   });
-}
+  // }
 
-renderSelect(products, elSelect);
-//options
+  console.log(products);
+  renderProduct(products);
+})();
+
+// options;
 
 elSelect.addEventListener("change", (evt) => {
   const opt = elSelect.value;
