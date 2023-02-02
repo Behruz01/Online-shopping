@@ -1,14 +1,13 @@
 import findElement from "./units/findElement.js";
-
 const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
-
-let products = [];
-
+// import { getData } from "./main.js";
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
-const elForm = findElement("#addForm");
-const elSelect = findElement("#select");
+// const elSelect = findElement("#select");
+const loader = findElement("#loader");
+const form = findElement("#addForm");
 
+let products = [];
 function renderProduct(array, parent = elCards) {
   parent.textContent = "";
 
@@ -37,41 +36,65 @@ function renderProduct(array, parent = elCards) {
   });
   parent.appendChild(fragment);
 }
+// try {
+const getData = async function getData() {
+  const res = await fetch(BASE_URL + "/products");
 
-function getData() {
-  try {
-    async function getData() {
-      const res = await fetch(BASE_URL + "/products");
+  let data = await res.json();
+  products = data;
 
-      if (res.status === 404) {
-        throw new Error("Malumot topilmadi!");
-      }
-      let data = await res.json();
-      products = data;
-
-      // elSelect.innerHTML = `
-      //     <option value="products">products</option>
-      //   `;
-      // let newArray = [];
-
-      // products.forEach((element) => {
-      //   if (!newArray.includes(element.category)) {
-      //     newArray.push(element.category);
-      //   }
-      // });
-
-      // newArray.forEach((elem) => {
-      //   let elOption = document.createElement("option");
-      //   elOption.value = elem;
-      //   elOption.textContent = elem;
-
-      //   elSelect.appendChild(elOption);
-      // });
-
-      renderProduct(products);
-    }
-    getData();
-  } catch (err) {
-    console.log(err);
+  loader.style.display = "none";
+  if (res.status === 404) {
+    throw new Error("Malumot topilmadi!");
   }
-}
+
+  let newArray = [];
+
+  products.forEach((element) => {
+    if (!newArray.includes(element.category)) {
+      newArray.push(element.category);
+    }
+  });
+
+  newArray.forEach((elem) => {
+    let elOption = document.createElement("option");
+    elOption.value = elem;
+    elOption.textContent = elem;
+  });
+
+  renderProduct(products);
+};
+getData();
+
+form.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+
+  const name = evt.target.name.value;
+  const image = evt.target.image.value;
+  const category = evt.target.category.value;
+  const price = evt.target.price.value;
+  const rating = evt.target.rating.value;
+  const createdAt = evt.target.createdAt.value;
+
+  const newObject = {
+    name,
+    image,
+    category,
+    price,
+    rating,
+    createdAt,
+  };
+  fetch(BASE_URL + "/products", {
+    method: "POST",
+    body: JSON.stringify(newObject),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      alert("added product");
+      console.log(data);
+      form.reset();
+    })
+    .catch((err) => {
+      console.log("Not found");
+    });
+});

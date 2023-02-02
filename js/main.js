@@ -1,6 +1,6 @@
 import findElement from "./units/findElement.js";
 
-const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
+export const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
 const elSelect = findElement("#select");
@@ -35,44 +35,36 @@ function renderProduct(array, parent = elCards) {
   });
   parent.appendChild(fragment);
 }
-try {
-  async function getData() {
-    const res = await fetch(BASE_URL + "/products");
+export const getData = async function getData(select) {
+  const res = await fetch(BASE_URL + "/products");
 
-    let data = await res.json();
-    products = data;
+  let data = await res.json();
+  products = data;
 
-    loader.style.display = "none";
-    if (res.status === 404) {
-      throw new Error("Malumot topilmadi!");
-    }
-
-    elSelect.innerHTML = `
-        <option value="products">products</option>
-      `;
-    let newArray = [];
-
-    products.forEach((element) => {
-      if (!newArray.includes(element.category)) {
-        newArray.push(element.category);
-      }
-    });
-
-    newArray.forEach((elem) => {
-      let elOption = document.createElement("option");
-      elOption.value = elem;
-      elOption.textContent = elem;
-
-      elSelect.appendChild(elOption);
-    });
-
-    console.log(products);
-    renderProduct(products);
+  // loader.style.display = "none";
+  if (res.status === 404) {
+    throw new Error("Malumot topilmadi!");
   }
-  getData();
-} catch (err) {
-  console.log(err);
-}
+
+  let newArray = [];
+
+  products.forEach((element) => {
+    if (!newArray.includes(element.category)) {
+      newArray.push(element.category);
+    }
+  });
+
+  newArray.forEach((elem) => {
+    let elOption = document.createElement("option");
+    elOption.value = elem;
+    elOption.textContent = elem;
+
+    elSelect.appendChild(elOption);
+  });
+
+  renderProduct(products);
+};
+getData(elSelect);
 
 // options;
 
@@ -93,3 +85,4 @@ elSelect.addEventListener("change", (evt) => {
     renderProduct(filteredPost);
   }
 });
+export default getData;

@@ -44,13 +44,24 @@
         <input
           class="form-control mt-3"
           type="number"
-          name="number"
-          placeholder="number"
+          name="rating"
+          placeholder="rating"
+        />
+        <input
+          class="form-control mt-3"
+          type="datetime-local"
+          name="createdAt"
+          placeholder="createdAt"
         />
         <button class="btn btn-outline-primary form-control mt-3">
           Add product
         </button>
       </form>
+    </div>
+
+    <div class="cards row"></div>
+    <div class="spinner-border position-absolute top-50 start-50" role="status">
+      <span id="loader" class="visually-hidden">Loading...</span>
     </div>
 
     <template id="product-template">
