@@ -1,5 +1,5 @@
 import findElement from "./units/findElement.js";
-const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
+const BASE_URL = `https://fakestoreapi.com/`;
 // import { getData } from "./main.js";
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
@@ -21,6 +21,7 @@ function renderProduct(array, parent = elCards) {
     const category = findElement(".category", template);
     const price = findElement(".price", template);
     const rating = findElement(".rating", template);
+    const description = findElement(".description", template);
     const ratingFull = findElement(".rating-full", template);
     const ratingHalf = findElement(".rating-half", template);
     const ratingStarts = findElement(".rating-stars", template);
@@ -29,8 +30,9 @@ function renderProduct(array, parent = elCards) {
     date.textContent = product.createdAt;
     category.textContent = product.category;
     price.textContent = "Prise:  " + product.price + "$";
-    rating.textContent = product.rating;
+    rating.textContent = ` ${product.rating.count} from ${product.rating.rate} ⭐️`;
     img.src = product.image;
+    description.textContent = product.description;
 
     fragment.appendChild(template);
   });
@@ -38,7 +40,7 @@ function renderProduct(array, parent = elCards) {
 }
 // try {
 const getData = async function getData() {
-  const res = await fetch(BASE_URL + "/products");
+  const res = await fetch(BASE_URL + "products");
 
   let data = await res.json();
   products = data;
@@ -74,17 +76,18 @@ form.addEventListener("submit", (evt) => {
   const category = evt.target.category.value;
   const price = evt.target.price.value;
   const rating = evt.target.rating.value;
-  const createdAt = evt.target.createdAt.value;
+  // const createdAt = evt.target.createdAt.value;
+  const description = evt.target.description;
 
   const newObject = {
     name,
     image,
     category,
     price,
-    rating,
-    createdAt,
+    rating: { rate: rating, couny: 1000 },
+    description,
   };
-  fetch(BASE_URL + "/products", {
+  fetch(BASE_URL + "products", {
     method: "POST",
     body: JSON.stringify(newObject),
   })

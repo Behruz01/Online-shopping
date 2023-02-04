@@ -1,6 +1,6 @@
 import findElement from "./units/findElement.js";
 
-export const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
+export const BASE_URL = `https://fakestoreapi.com/`;
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
 const elSelect = findElement("#select");
@@ -20,28 +20,30 @@ function renderProduct(array, parent = elCards) {
     const category = findElement(".category", template);
     const price = findElement(".price", template);
     const rating = findElement(".rating", template);
+    const description = findElement(".description", template);
+
     const ratingFull = findElement(".rating-full", template);
     const ratingHalf = findElement(".rating-half", template);
     const ratingStarts = findElement(".rating-stars", template);
 
     title.textContent = product.name;
     date.textContent = product.createdAt;
+    description.textContent = product.description;
     category.textContent = product.category;
     price.textContent = "Prise:  " + product.price + "$";
-    rating.textContent = product.rating;
+    rating.textContent = ` ${product.rating.count} from ${product.rating.rate} ⭐️`;
     img.src = product.image;
-
+    img.style.height = "300px";
     fragment.appendChild(template);
   });
   parent.appendChild(fragment);
 }
 export const getData = async function getData(select) {
-  const res = await fetch(BASE_URL + "/products");
+  const res = await fetch(BASE_URL + "products");
 
   let data = await res.json();
   products = data;
 
-  // loader.style.display = "none";
   if (res.status === 404) {
     throw new Error("Malumot topilmadi!");
   }
