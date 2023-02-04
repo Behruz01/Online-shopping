@@ -1,6 +1,6 @@
 import findElement from "./units/findElement.js";
 
-export const BASE_URL = `https://fakestoreapi.com/`;
+export const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
 const elSelect = findElement("#select");
@@ -39,7 +39,7 @@ function renderProduct(array, parent = elCards) {
   parent.appendChild(fragment);
 }
 export const getData = async function getData(select) {
-  const res = await fetch(BASE_URL + "products");
+  const res = await fetch(BASE_URL + "/products");
 
   let data = await res.json();
   products = data;

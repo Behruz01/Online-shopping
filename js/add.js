@@ -1,5 +1,5 @@
 import findElement from "./units/findElement.js";
-const BASE_URL = `https://fakestoreapi.com/`;
+const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
 // import { getData } from "./main.js";
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
@@ -40,7 +40,7 @@ function renderProduct(array, parent = elCards) {
 }
 // try {
 const getData = async function getData() {
-  const res = await fetch(BASE_URL + "products");
+  const res = await fetch(BASE_URL + "/products");
 
   let data = await res.json();
   products = data;
@@ -87,7 +87,7 @@ form.addEventListener("submit", (evt) => {
     rating: { rate: rating, couny: 1000 },
     description,
   };
-  fetch(BASE_URL + "products", {
+  fetch(BASE_URL + "/products", {
     method: "POST",
     body: JSON.stringify(newObject),
   })
