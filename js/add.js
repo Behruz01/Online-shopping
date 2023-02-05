@@ -1,11 +1,10 @@
 import findElement from "./units/findElement.js";
 const BASE_URL = `https://63d61948dc3c55baf4309fc7.mockapi.io`;
-// import { getData } from "./main.js";
 const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
-// const elSelect = findElement("#select");
 const loader = findElement("#loader");
 const form = findElement("#addForm");
+const editForm = findElement(".editForm");
 
 let products = [];
 function renderProduct(array, parent = elCards) {
@@ -22,9 +21,16 @@ function renderProduct(array, parent = elCards) {
     const price = findElement(".price", template);
     const rating = findElement(".rating", template);
     const description = findElement(".description", template);
+
     const ratingFull = findElement(".rating-full", template);
     const ratingHalf = findElement(".rating-half", template);
     const ratingStarts = findElement(".rating-stars", template);
+
+    const deleteBtn = findElement(".btn-outline-danger", template);
+    const editBtn = findElement(".btn-outline-info", template);
+
+    deleteBtn.dataset.id = products.id;
+    editBtn.dataset.id = products.id;
 
     title.textContent = product.name;
     date.textContent = product.createdAt;
@@ -44,7 +50,6 @@ const getData = async function getData() {
 
   let data = await res.json();
   products = data;
-
   loader.style.display = "none";
   if (res.status === 404) {
     throw new Error("Malumot topilmadi!");
@@ -93,6 +98,7 @@ form.addEventListener("submit", (evt) => {
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data);
       alert("added product");
       console.log(data);
       form.reset();
@@ -100,4 +106,75 @@ form.addEventListener("submit", (evt) => {
     .catch((err) => {
       console.log("Not found");
     });
+});
+// delete product
+elCards.addEventListener("click", (evt) => {
+  const target = evt.target;
+  if (target.className.includes("btn-outline-danger")) {
+    const id = evt.target.dataset.id;
+    fetch(BASE_URL + "/products/" + id, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert("post o'chirildi ✅");
+        getData();
+      })
+      .catch((err) => {
+        alert("post o'chirilmadi ❌");
+      });
+  }
+});
+
+// Edit product
+elCards.addEventListener("click", (evt) => {
+  const target = evt.target;
+  if (target.className.includes("btn-outline-info")) {
+    const id = target.dataset.id;
+    products.forEach((product) => {
+      if (product.id === id) {
+        const image = editForm.image;
+        const title = editForm.title;
+        const category = editForm.category;
+        const price = editForm.price;
+        const rating = editForm.rating;
+        const editImg = findElement("#editImage");
+        const editButton = findElement("#saveBtn");
+
+        editImg.src = product.image;
+        image.alt = product.name;
+
+        image.value = product.value;
+        title.value = product.name;
+        category.value = product.category;
+        price.value = product.price;
+        rating.value = product.rating;
+
+        editButton.addEventListener("click", () => {
+          console.log("salom");
+          newObject = {
+            id: product.id,
+            image: image.value,
+            name: title.value,
+            category: category.value,
+            price: price.value,
+            rating: rating.value,
+          };
+
+          fetch(BASE_URL + "/products/" + id, {
+            method: "PUT",
+            body: JSON.stringify(newObject),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              getData();
+              alert("Mahsulot o'zgartirildi✅ ");
+            })
+            .catch((err) => {
+              alert("Mahsulot o'zgartirilmadi❌");
+            });
+        });
+      }
+    });
+  }
 });

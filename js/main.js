@@ -43,9 +43,10 @@ export const getData = async function getData(select) {
 
   let data = await res.json();
   products = data;
+  loader.style.display = "none";
 
   if (res.status === 404) {
-    throw new Error("Malumot topilmadi!");
+    throw new Error("Malumot topilmadi❗️");
   }
 
   let newArray = [];
@@ -66,7 +67,7 @@ export const getData = async function getData(select) {
 
   renderProduct(products);
 };
-getData(elSelect);
+getData();
 
 // options;
 
