@@ -10,6 +10,11 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    <!--  swiper -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
     <title>Online shopping home</title>
   </head>
   <style>
@@ -22,6 +27,32 @@
     <div class="container p-3">
       <h2 class="text-center">Products</h2>
 
+      <!-- Slider main container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <div class="swiper-slide">
+            <img src="https://picsum.photos/800/600" alt="salom" />
+          </div>
+          <div class="swiper-slide">
+            <img src="https://picsum.photos/800/600" alt="salom" />
+          </div>
+          <div class="swiper-slide">
+            <img src="https://picsum.photos/800/600" alt="salom" />
+          </div>
+          ...
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+        <!-- If we need scrollbar -->
+        <div class="swiper-scrollbar"></div>
+      </div>
       <select name="select" id="select" class="select form-control">
         <option value="products">products</option>
       </select>
@@ -75,6 +106,7 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
 
     <script type="module" src="./js/main.js"></script>
   </body>
