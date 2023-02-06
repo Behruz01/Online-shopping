@@ -5,6 +5,8 @@ const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
 const elSelect = findElement("#select");
 const loader = findElement("#loader");
+const elSearch = findElement(".search");
+
 let products = [];
 
 function renderProduct(array, parent = elCards) {
@@ -13,7 +15,6 @@ function renderProduct(array, parent = elCards) {
   const fragment = document.createDocumentFragment();
   array.forEach((product) => {
     const template = templateProduct.content.cloneNode(true);
-
     const title = findElement(".card-title", template);
     const date = findElement(".date", template);
     const img = findElement(".card-img-top", template);
@@ -33,7 +34,9 @@ function renderProduct(array, parent = elCards) {
     price.textContent = "Prise:  " + product.price + "$";
     rating.textContent = ` ${product.rating.count} from ${product.rating.rate} ⭐️`;
     img.src = product.image;
-    img.style.height = "300px";
+
+    img.dataset.id = product.id;
+    description.id = product.id;
     fragment.appendChild(template);
   });
   parent.appendChild(fragment);
@@ -43,7 +46,7 @@ export const getData = async function getData(select) {
 
   let data = await res.json();
   products = data;
-  loader.style.display = "none";
+  // loader.style.display = "none";
 
   if (res.status === 404) {
     throw new Error("Malumot topilmadi❗️");
@@ -92,6 +95,17 @@ elSelect.addEventListener("change", (evt) => {
 });
 export default getData;
 
+elCards.addEventListener("click", (evt) => {
+  if (
+    evt.target.className.includes("card-img-top") ||
+    evt.target.className.includes("description")
+  ) {
+    const id = evt.target.dataset.id;
+    localStorage.setItem("id", id);
+    window.location.href = "http://127.0.0.1:5501/singleProduct.html";
+  }
+});
+
 // swiper
 import Swiper from "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js";
 
@@ -130,4 +144,19 @@ const swiper = new Swiper(".swiper", {
       spaceBetween: 40,
     },
   },
+});
+
+// search
+export const search = elSearch.addEventListener("input", (evt) => {
+  evt.preventDefault();
+
+  let searchProduct = [];
+  const value = elSearch.value;
+
+  products.forEach((element) => {
+    if (element.name.toLowerCase().includes(value.toLowerCase())) {
+      searchProduct.push(element);
+    }
+  });
+  renderProduct(searchProduct);
 });

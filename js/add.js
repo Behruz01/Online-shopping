@@ -9,7 +9,6 @@ const editForm = findElement(".editForm");
 let products = [];
 function renderProduct(array, parent = elCards) {
   parent.textContent = "";
-
   const fragment = document.createDocumentFragment();
   array.forEach((product) => {
     const template = templateProduct.content.cloneNode(true);
