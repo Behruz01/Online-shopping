@@ -49,6 +49,8 @@ export const getData = async function getData(select) {
     throw new Error("Malumot topilmadi❗️");
   }
 
+  // select
+
   let newArray = [];
 
   products.forEach((element) => {
@@ -67,7 +69,7 @@ export const getData = async function getData(select) {
 
   renderProduct(products);
 };
-// getData();
+getData();
 
 // options;
 
