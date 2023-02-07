@@ -7,6 +7,7 @@ const form = findElement("#addForm");
 const editForm = findElement(".editForm");
 
 let products = [];
+//render
 function renderProduct(array, parent = elCards) {
   parent.textContent = "";
   const fragment = document.createDocumentFragment();
@@ -80,7 +81,6 @@ form.addEventListener("submit", (evt) => {
   const category = evt.target.category.value;
   const price = evt.target.price.value;
   const rating = evt.target.rating.value;
-  // const createdAt = evt.target.createdAt.value;
   const description = evt.target.description;
 
   const newObject = {

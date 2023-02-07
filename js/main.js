@@ -8,7 +8,7 @@ const loader = findElement("#loader");
 const elSearch = findElement(".search");
 
 let products = [];
-
+//render
 function renderProduct(array, parent = elCards) {
   parent.textContent = "";
 
@@ -41,19 +41,19 @@ function renderProduct(array, parent = elCards) {
   });
   parent.appendChild(fragment);
 }
+
+// fetch
 export const getData = async function getData(select) {
   const res = await fetch(BASE_URL + "/products");
 
   let data = await res.json();
   products = data;
-  // loader.style.display = "none";
 
   if (res.status === 404) {
     throw new Error("Malumot topilmadi❗️");
   }
 
   // select
-
   let newArray = [];
 
   products.forEach((element) => {
@@ -67,6 +67,7 @@ export const getData = async function getData(select) {
     elOption.value = elem;
     elOption.textContent = elem;
 
+    loader.style.display = "none";
     elSelect.appendChild(elOption);
   });
 
@@ -75,7 +76,6 @@ export const getData = async function getData(select) {
 getData();
 
 // options;
-
 elSelect.addEventListener("change", (evt) => {
   const opt = elSelect.value;
 

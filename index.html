@@ -10,7 +10,6 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <!--  swiper -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
@@ -24,9 +23,12 @@
   </style>
   <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg bg-light container">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="./admin.html">Admin</a>
+    <nav
+      style="z-index: 2"
+      class="navbar navbar-expand-lg bg-dark position-fixed w-100"
+    >
+      <div class="container">
+        <a class="navbar-brand text-light" href="./admin.html">Admin</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -41,16 +43,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html"
+              <a
+                class="nav-link active text-light"
+                aria-current="page"
+                href="index.html"
                 >Home</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link text-light" href="#">Link</a>
             </li>
             <li class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle"
+                class="nav-link dropdown-toggle text-light"
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -58,9 +63,7 @@
               >
                 Dropdown
               </a>
-              <!-- 
-              <ul class="dropdown-menu">
-                <li> -->
+
               <select
                 name="select"
                 id="select"
@@ -68,11 +71,9 @@
               >
                 <option value="products">products</option>
               </select>
-              <!-- </li>
-              </ul> -->
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link disabled text-light">Disabled</a>
             </li>
           </ul>
           <form class="d-flex" role="search">
@@ -90,7 +91,6 @@
       </div>
     </nav>
 
-    <!-- *** -->
     <div class="container p-3">
       <h2 class="text-center">Products</h2>
 
@@ -100,13 +100,13 @@
         <div class="swiper-wrapper">
           <!-- Slides -->
           <div class="swiper-slide">
-            <img src="https://picsum.photos/800/600" alt="salom" />
+            <img src="https://picsum.photos/300/400" alt="salom" />
           </div>
           <div class="swiper-slide">
-            <img src="https://picsum.photos/800/600" alt="salom" />
+            <img src="https://picsum.photos/300/400" alt="salom" />
           </div>
           <div class="swiper-slide">
-            <img src="https://picsum.photos/800/600" alt="salom" />
+            <img src="https://picsum.photos/300/400" alt="salom" />
           </div>
           ...
         </div>
@@ -154,9 +154,7 @@
       </div>
     </template>
     <div class="spinner-border position-absolute top-50 start-50" role="status">
-      <span style="position: absolute" id="loader" class="visually-hidden"
-        >Loading...</span
-      >
+      <span id="loader" class="visually-hidden">Loading...</span>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
