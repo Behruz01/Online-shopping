@@ -32,7 +32,7 @@ function renderProduct(array, parent = elCards) {
     description.textContent = product.description;
     category.textContent = product.category;
     price.textContent = "Prise:  " + product.price + "$";
-    rating.textContent = ` ${product.rating.count} from ${product.rating.rate} ⭐️`;
+    rating.textContent = ` ${product.rating} ⭐️`;
     img.src = product.image;
 
     img.dataset.id = product.id;
@@ -102,7 +102,7 @@ elCards.addEventListener("click", (evt) => {
   ) {
     const id = evt.target.dataset.id;
     localStorage.setItem("id", id);
-    window.location.href = "http://127.0.0.1:5501/singleProduct.html";
+    window.location.href = "/singleProduct.html";
   }
 });
 

@@ -23,6 +23,6 @@ fetch(`https://63d61948dc3c55baf4309fc7.mockapi.io` + "/products/" + id, {
     elTitle.textContent = newObject.name;
     elCategory.textContent = newObject.category;
     elDescription.textContent = newObject.description;
-    elPrice.textContent = newObject.price + "$";
+    elPrice.textContent = "Price: " + newObject.price + "$";
     elImage.src = newObject.image;
   });

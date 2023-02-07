@@ -4,8 +4,9 @@ const templateProduct = findElement("#product-template");
 const elCards = findElement(".cards");
 const loader = findElement("#loader");
 const form = findElement("#addForm");
-const editForm = findElement(".editForm");
+const editForm = findElement("#editeForm");
 
+console.log(loader);
 let products = [];
 //render
 function renderProduct(array, parent = elCards) {
@@ -29,14 +30,14 @@ function renderProduct(array, parent = elCards) {
     const deleteBtn = findElement(".btn-outline-danger", template);
     const editBtn = findElement(".btn-outline-info", template);
 
-    deleteBtn.dataset.id = products.id;
-    editBtn.dataset.id = products.id;
+    deleteBtn.dataset.id = product.id;
+    editBtn.dataset.id = product.id;
 
     title.textContent = product.name;
     date.textContent = product.createdAt;
     category.textContent = product.category;
     price.textContent = "Prise:  " + product.price + "$";
-    rating.textContent = ` ${product.rating.count} from ${product.rating.rate} ⭐️`;
+    rating.textContent = `Rating: ${product.rating} ⭐️`;
     img.src = product.image;
     description.textContent = product.description;
 
@@ -97,27 +98,31 @@ form.addEventListener("submit", (evt) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
-      alert("added product");
-      console.log(data);
+      alert("added product ✅");
       form.reset();
+      getData();
     })
     .catch((err) => {
-      console.log("Not found");
+      console.log("Not found ❌");
     });
 });
+
 // delete product
 elCards.addEventListener("click", (evt) => {
   const target = evt.target;
+
   if (target.className.includes("btn-outline-danger")) {
-    const id = evt.target.dataset.id;
+    const id = target.dataset.id;
+
+    console.log(id);
     fetch(BASE_URL + "/products/" + id, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("post o'chirildi ✅");
         getData();
+
+        alert("post o'chirildi ✅");
       })
       .catch((err) => {
         alert("post o'chirilmadi ❌");
@@ -143,26 +148,29 @@ elCards.addEventListener("click", (evt) => {
         editImg.src = product.image;
         image.alt = product.name;
 
-        image.value = product.value;
+        image.value = product.image;
         title.value = product.name;
         category.value = product.category;
         price.value = product.price;
         rating.value = product.rating;
 
         editButton.addEventListener("click", () => {
-          console.log("salom");
-          newObject = {
+          const newObject = {
             id: product.id,
             image: image.value,
             name: title.value,
             category: category.value,
-            price: price.value,
+            price: price.value + "$",
             rating: rating.value,
           };
 
           fetch(BASE_URL + "/products/" + id, {
             method: "PUT",
             body: JSON.stringify(newObject),
+
+            headers: {
+              "Content-Type": "application/json",
+            },
           })
             .then((res) => res.json())
             .then((data) => {
