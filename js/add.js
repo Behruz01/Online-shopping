@@ -6,7 +6,6 @@ const loader = findElement("#loader");
 const form = findElement("#addForm");
 const editForm = findElement("#editeForm");
 
-console.log(loader);
 let products = [];
 //render
 function renderProduct(array, parent = elCards) {

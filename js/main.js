@@ -8,7 +8,7 @@ const loader = findElement("#loader");
 const elSearch = findElement(".search");
 
 let products = [];
-//render
+//////////////////render
 function renderProduct(array, parent = elCards) {
   parent.textContent = "";
 
@@ -27,6 +27,9 @@ function renderProduct(array, parent = elCards) {
     const ratingHalf = findElement(".rating-half", template);
     const ratingStarts = findElement(".rating-stars", template);
 
+    elCards.dataset.id = product.id;
+    elCards.addEventListener("click", singlePage(elCards));
+
     title.textContent = product.name;
     date.textContent = product.createdAt;
     description.textContent = product.description;
@@ -42,7 +45,7 @@ function renderProduct(array, parent = elCards) {
   parent.appendChild(fragment);
 }
 
-// fetch
+///////////////////////// fetch
 export const getData = async function getData(select) {
   const res = await fetch(BASE_URL + "/products");
 
@@ -53,7 +56,7 @@ export const getData = async function getData(select) {
     throw new Error("Malumot topilmadi❗️");
   }
 
-  // select
+  //////////////////// select
   let newArray = [];
 
   products.forEach((element) => {
@@ -75,7 +78,7 @@ export const getData = async function getData(select) {
 };
 getData();
 
-// options;
+///////////////////// options;
 elSelect.addEventListener("change", (evt) => {
   const opt = elSelect.value;
 
@@ -95,18 +98,7 @@ elSelect.addEventListener("change", (evt) => {
 });
 export default getData;
 
-elCards.addEventListener("click", (evt) => {
-  if (
-    evt.target.className.includes("card-img-top") ||
-    evt.target.className.includes("description")
-  ) {
-    const id = evt.target.dataset.id;
-    localStorage.setItem("id", id);
-    window.location.href = "/singleProduct.html";
-  }
-});
-
-// swiper
+/////////////// swiper //////////////////////
 import Swiper from "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js";
 
 const swiper = new Swiper(".swiper", {
@@ -146,7 +138,7 @@ const swiper = new Swiper(".swiper", {
   },
 });
 
-// search
+////////////////// search
 export const search = elSearch.addEventListener("input", (evt) => {
   evt.preventDefault();
 
@@ -160,3 +152,12 @@ export const search = elSearch.addEventListener("input", (evt) => {
   });
   renderProduct(searchProduct);
 });
+
+/////////////////card target
+function singlePage(card) {
+  card.addEventListener("click", () => {
+    const id = card.dataset.id;
+    localStorage.setItem("id", id);
+    window.location.href = "/singleProduct.html";
+  });
+}
