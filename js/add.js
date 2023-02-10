@@ -7,6 +7,12 @@ const form = findElement("#addForm");
 const editForm = findElement("#editeForm");
 
 let products = [];
+
+const token = localStorage.getItem("token");
+
+if (!token) {
+  window.location.href = "http://127.0.0.1:5501/login.html?";
+}
 //render
 function renderProduct(array, parent = elCards) {
   parent.textContent = "";
